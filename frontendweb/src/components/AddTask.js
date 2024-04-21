@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useHistory for navigation
+import { useNavigate } from 'react-router-dom'; 
 import "./AddTask.css"; // Import CSS for AddTask component
 
 const AddTask = ({ onTaskAdded }) => {
@@ -14,7 +14,7 @@ const AddTask = ({ onTaskAdded }) => {
     category: '',
   });
 
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +29,7 @@ const AddTask = ({ onTaskAdded }) => {
     try {
       const csrftoken = getCookie('csrftoken'); // Function to get CSRF token
       const response = await axios.post(
-        'http://localhost:8000/api/AddTask/',
+        'http://localhost:8000/api/tasks/',
         formData,
         {
           headers: {

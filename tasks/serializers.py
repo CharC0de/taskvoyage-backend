@@ -47,12 +47,14 @@ class EmailConfirmationSerializer(serializers.Serializer):
     uid = serializers.CharField()
     token = serializers.CharField()
 
+
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ['id', 'title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category']
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['id', 'title', 'start_date', 'end_date', 'start_time', 'end_time', 'description']
+

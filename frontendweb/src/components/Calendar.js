@@ -43,7 +43,7 @@ const CalendarPage = () => {
     // Implement saving the event to the backend
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/add-event/',
+        'http://localhost:8000/api/events/',
         event
       );
       setAddedEvent(response.data); // Set the added event
