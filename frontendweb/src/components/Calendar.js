@@ -10,9 +10,24 @@ const CalendarPage = () => {
   const [addedEvent, setAddedEvent] = useState(null); // Added state to store the newly added event
 
   useEffect(() => {
-    // Fetch events from backend
-    // Implement this according to your backend API
+    fetchEvents();
+    // Load events from localStorage when the component mounts
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents));
+    }
   }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/events/');
+      setEvents(response.data);
+      // Store events in localStorage after fetching from the backend
+      localStorage.setItem('events', JSON.stringify(response.data));
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
 
   const handleEventClick = (info) => {
     // Handle event click
@@ -24,6 +39,8 @@ const CalendarPage = () => {
     setEvents(events.filter(event => event !== selectedEvent));
     // Implement deleting the event from the backend if needed
     setSelectedEvent(null);
+    // Update localStorage after deleting event
+    localStorage.setItem('events', JSON.stringify(events.filter(event => event !== selectedEvent)));
   };
 
   const handleCancel = () => {
@@ -40,6 +57,8 @@ const CalendarPage = () => {
   const handleEventAdd = async (event) => {
     // Add event to the calendar
     setEvents([...events, event]);
+    // Update localStorage after adding event
+    localStorage.setItem('events', JSON.stringify([...events, event]));
     // Implement saving the event to the backend
     try {
       const response = await axios.post(
@@ -71,13 +90,6 @@ const CalendarPage = () => {
         {/* Add event form */}
         <EventForm addEvent={handleEventAdd} />
         {/* Display added event details */}
-        {addedEvent && (
-          <EventDetails
-            event={addedEvent}
-            onDelete={handleEventDelete}
-            onCancel={handleCancel}
-          />
-        )}
       </div>
       <div className="calendar-container">
         <FullCalendar

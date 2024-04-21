@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
-import "./AddTask.css"; // Import CSS for AddTask component
+import "./AddTask.css";
 
 const AddTask = ({ onTaskAdded }) => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const AddTask = ({ onTaskAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const csrftoken = getCookie('csrftoken'); // Function to get CSRF token
+      const csrftoken = getCookie('csrftoken');
       const response = await axios.post(
         'http://localhost:8000/api/task/',
         formData,
@@ -40,15 +40,15 @@ const AddTask = ({ onTaskAdded }) => {
       onTaskAdded(response.data);
       setFormData({
         title: '',
-        start_date: '',
-        end_date: '',
-        start_time: '',
-        end_time: '',
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
         description: '',
         category: '',
       });
       // Redirect to dashboard after adding task
-      navigate('/dashboard');
+      navigate('/Task');
     } catch (error) {
       console.error('Error adding task:', error);
     }
@@ -114,7 +114,6 @@ const AddTask = ({ onTaskAdded }) => {
 
 export default AddTask;
 
-// Function to get CSRF token
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
