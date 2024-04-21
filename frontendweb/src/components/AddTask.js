@@ -6,12 +6,13 @@ import "./AddTask.css";
 const AddTask = ({ onTaskAdded }) => {
   const [formData, setFormData] = useState({
     title: '',
-    startDate: '',
-    endDate: '',
-    startTime: '',
-    endTime: '',
+    start_date: '',
+    end_date: '',
+    start_time: '',
+    end_time: '',
     description: '',
     category: '',
+    status: 'Ongoing', // Set default status as "Ongoing"
   });
 
   const navigate = useNavigate();
@@ -34,12 +35,13 @@ const AddTask = ({ onTaskAdded }) => {
       onTaskAdded(response.data);
       setFormData({
         title: '',
-        startDate: '',
-        endDate: '',
-        startTime: '',
-        endTime: '',
+        start_date: '',
+        end_date: '',
+        start_time: '',
+        end_time: '',
         description: '',
         category: '',
+        status: 'Ongoing', // Reset status to "Ongoing" after submitting
       });
       // Redirect to task page after adding task
       navigate('/Task');
@@ -71,19 +73,19 @@ const AddTask = ({ onTaskAdded }) => {
           </div>
           <div className="form-group">
             <label>Start Date:</label>
-            <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
+            <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Date:</label>
-            <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
+            <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Start Time:</label>
-            <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} required />
+            <input type="time" name="start_time" value={formData.start_time} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Time:</label>
-            <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} required />
+            <input type="time" name="end_time" value={formData.end_time} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Description:</label>

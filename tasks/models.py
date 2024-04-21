@@ -37,6 +37,12 @@ class Task(models.Model):
         ('Sports', 'Sports'),
         ('Health', 'Health'),
     ]
+    
+    STATUS_CHOICES = (
+        ('Ongoing', 'Ongoing'),
+        ('Completed', 'Completed'),
+        ('Pending', 'Pending'),
+    )
 
     title = models.CharField(max_length=255)
     start_date = models.DateField()
@@ -45,6 +51,8 @@ class Task(models.Model):
     end_time = models.TimeField()
     description = models.TextField()
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Ongoing')
+
     def __str__(self):
         return self.title
 

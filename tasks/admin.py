@@ -10,7 +10,7 @@ class EmailConfirmationTokenAdmin(admin.ModelAdmin):
     # Add any other configurations you want for the admin panel
     
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category']
+    list_display = ['title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category', 'status']
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ['title', 'start', 'end']
