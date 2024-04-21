@@ -27,15 +27,9 @@ const AddTask = ({ onTaskAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const csrftoken = getCookie('csrftoken');
       const response = await axios.post(
         'http://localhost:8000/api/task/',
-        formData,
-        {
-          headers: {
-            'X-CSRFToken': csrftoken,
-          },
-        }
+        formData
       );
       onTaskAdded(response.data);
       setFormData({
@@ -47,7 +41,7 @@ const AddTask = ({ onTaskAdded }) => {
         description: '',
         category: '',
       });
-      // Redirect to dashboard after adding task
+      // Redirect to task page after adding task
       navigate('/Task');
     } catch (error) {
       console.error('Error adding task:', error);
@@ -77,19 +71,19 @@ const AddTask = ({ onTaskAdded }) => {
           </div>
           <div className="form-group">
             <label>Start Date:</label>
-            <input type="date" name="start_date" value={formData.startDate} onChange={handleChange} required />
+            <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Date:</label>
-            <input type="date" name="end_date" value={formData.endDate} onChange={handleChange} required />
+            <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Start Time:</label>
-            <input type="time" name="start_time" value={formData.startTime} onChange={handleChange} required />
+            <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Time:</label>
-            <input type="time" name="end_time" value={formData.endTime} onChange={handleChange} required />
+            <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Description:</label>
@@ -113,18 +107,3 @@ const AddTask = ({ onTaskAdded }) => {
 };
 
 export default AddTask;
-
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + '=') {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
