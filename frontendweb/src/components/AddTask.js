@@ -1,6 +1,7 @@
+// AddTask.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import "./AddTask.css";
 
 const AddTask = ({ onTaskAdded }) => {
@@ -33,6 +34,9 @@ const AddTask = ({ onTaskAdded }) => {
         formData
       );
       onTaskAdded(response.data);
+      // Save task data to localStorage
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      localStorage.setItem('tasks', JSON.stringify([...tasks, response.data]));
       setFormData({
         title: '',
         start_date: '',

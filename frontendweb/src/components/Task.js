@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import "./Task.css"; // Import the CSS file for styling
+import "./Task.css";
 
-const Tasks = () => {
+const Task = () => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch tasks from backend
-    axios.get('/api/task')
+    // Fetch tasks from the database
+    axios.get('http://localhost:8000/api/task/')
       .then(response => {
         setTasks(response.data);
       })
@@ -38,7 +38,15 @@ const Tasks = () => {
     navigate('/AddTask');
   };
 
-  // Functions for marking tasks as ongoing, completed, or failed
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/task/${taskId}/`);
+      // Remove the deleted task from the tasks state
+      setTasks(tasks.filter(task => task.id !== taskId));
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
 
   return (
     <div className="page-container">
@@ -88,8 +96,17 @@ const Tasks = () => {
             {searchResults.length > 0 ? (
               searchResults.map(task => (
                 <tr key={task.id}>
-                  {/* Render task details */}
-                  {/* Task data */}
+                  <td>{task.title}</td>
+                  <td>{task.start_date}</td>
+                  <td>{task.end_date}</td>
+                  <td>{task.start_time}</td>
+                  <td>{task.end_time}</td>
+                  <td>{task.description}</td>
+                  <td>{task.category}</td>
+                  <td>{task.status}</td>
+                  <td>
+                    <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -104,4 +121,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default Task;
