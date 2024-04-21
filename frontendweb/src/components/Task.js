@@ -1,13 +1,13 @@
-// Tasks.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useHistory for navigation
+import { useNavigate } from 'react-router-dom';
+import "./Task.css"; // Import the CSS file for styling
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch tasks from backend
@@ -35,98 +35,71 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     // Redirect to add task page
-    navigate('/AddTask'); // Navigate to the add task page
+    navigate('/AddTask');
   };
 
-  const handleMarkAsOngoing = (id) => {
-    // Update task status as ongoing
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        return { ...task, status: 'Ongoing' };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
-
-  const handleMarkAsCompleted = (id) => {
-    // Update task status as completed
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        return { ...task, status: 'Completed' };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
-
-  const handleMarkAsFailed = (id) => {
-    // Update task status as failed
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        return { ...task, status: 'Failed' };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
+  // Functions for marking tasks as ongoing, completed, or failed
 
   return (
-    <div>
-      <h1>Tasks</h1>
-      <input
-        type="text"
-        placeholder="Search tasks"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-      <button onClick={handleAddTask}>Add Task</button> {/* Fix the Add Task button */}
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {searchResults.length > 0 ? (
-            searchResults.map(task => (
-              <tr key={task.id}>
-                <td>{task.title}</td>
-                <td>{task.startDate}</td>
-                <td>{task.endDate}</td>
-                <td>{task.startTime}</td>
-                <td>{task.endTime}</td>
-                <td>{task.description}</td>
-                <td>{task.category}</td>
-                <td>{task.status}</td>
-                <td>
-                  {task.status === 'Ongoing' ? (
-                    <button onClick={() => handleMarkAsCompleted(task.id)}>Mark as Completed</button>
-                  ) : (
-                    <button onClick={() => handleMarkAsOngoing(task.id)}>Mark as Ongoing</button>
-                  )}
-                  {new Date(task.endDate) < new Date() && task.status !== 'Completed' ? (
-                    <button onClick={() => handleMarkAsFailed(task.id)}>Mark as Failed</button>
-                  ) : null}
-                </td>
-              </tr>
-            ))
-          ) : (
+    <div className="page-container">
+      <div className="sidebar3">
+        {/* Sidebar content */}
+        <div className="logo3">
+          <img src="./img/ship.png" alt="Ship Icon3" className="ship-icon3"/>  <span>TaskVoyage</span>
+        </div>
+        <ul className="navigation3">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/Task">Tasks</a></li>
+          <li><a href="/Calendar">Calendar</a></li>
+          <li><a href="/Settings">Settings</a></li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </div>
+      <div className="content-area">
+        {/* Content area */}
+        <h1>Tasks</h1>
+        <input
+          type="text"
+          placeholder="Search tasks"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleAddTask}>Add Task</button>
+        {/* Task table */}
+        <table>
+          {/* Table headers */}
+          <thead>
             <tr>
-              <td colSpan="9">No tasks exist, please create a task.</td>
+              <th>Title</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          {/* Table body */}
+          <tbody>
+            {/* Render tasks */}
+            {searchResults.length > 0 ? (
+              searchResults.map(task => (
+                <tr key={task.id}>
+                  {/* Render task details */}
+                  {/* Task data */}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9">No tasks exist, please create a task.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

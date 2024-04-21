@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import axios from 'axios';
+import "./Calendar.css";
 
 const CalendarPage = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [addedEvent, setAddedEvent] = useState(null); // Added state to store the newly added event
 
   useEffect(() => {
     // Fetch events from backend
@@ -34,10 +37,19 @@ const CalendarPage = () => {
     info.el.querySelector('.fc-content').innerHTML += `<button onClick="handleDeleteClick(${info.event.id})">Delete</button>`;
   };
 
-  const handleEventAdd = (event) => {
+  const handleEventAdd = async (event) => {
     // Add event to the calendar
     setEvents([...events, event]);
-    // Implement saving the event to the backend if needed
+    // Implement saving the event to the backend
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/add-event/',
+        event
+      );
+      setAddedEvent(response.data); // Set the added event
+    } catch (error) {
+      console.error('Error adding event:', error);
+    }
   };
 
   return (
@@ -51,13 +63,21 @@ const CalendarPage = () => {
           <li><a href="/Task">Tasks</a></li>
           <li><a href="/Calendar">Calendar</a></li>
           <li><a href="/Settings">Settings</a></li>
-          <li><a href="/Logout">Logout</a></li>
+          <li><a href="/login">Logout</a></li>
         </ul>
       </div>
       <div className="content">
         <h1>Calendar</h1>
         {/* Add event form */}
         <EventForm addEvent={handleEventAdd} />
+        {/* Display added event details */}
+        {addedEvent && (
+          <EventDetails
+            event={addedEvent}
+            onDelete={handleEventDelete}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
       <div className="calendar-container">
         <FullCalendar
@@ -67,6 +87,7 @@ const CalendarPage = () => {
           eventClick={handleEventClick}
           eventRender={handleEventRender}
         />
+        {/* Display selected event details */}
         {selectedEvent && (
           <EventDetails
             event={selectedEvent}
@@ -107,23 +128,29 @@ const EventForm = ({ addEvent }) => {
   };
 
   return (
-    <div>
+    <div className="event-form">
       <h2>Add Event</h2>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="title">Event Title:</label>
         <input
           type="text"
+          id="title"
           placeholder="Event Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        <label htmlFor="start">Start Date & Time:</label>
         <input
           type="datetime-local"
+          id="start"
           placeholder="Start Date & Time"
           value={start}
           onChange={(e) => setStart(e.target.value)}
         />
+        <label htmlFor="end">End Date & Time:</label>
         <input
           type="datetime-local"
+          id="end"
           placeholder="End Date & Time"
           value={end}
           onChange={(e) => setEnd(e.target.value)}

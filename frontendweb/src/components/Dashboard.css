@@ -1,3 +1,7 @@
+.dashboard {
+    display: flex;
+    height: 100vh; /* Set page height to full viewport height */
+  }
 .sidebar {
     background-color: #5B3E31;
     display: flex;
@@ -44,11 +48,8 @@
   }
 
 .content-area {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    flex: 1; /* Expand content area to fill remaining space */
+    flex: 3; /* Expand content area to fill remaining space */
+    padding: 20px;
 }
 
 .content-area h1 {

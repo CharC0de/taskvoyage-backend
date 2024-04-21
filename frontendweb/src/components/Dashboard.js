@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./Dashboard.css";
 
 
 const Dashboard = () => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
           <li><a href="/Task">Tasks</a></li>
           <li><a href="/Calendar">Calendar</a></li>
           <li><a href="/Settings">Settings</a></li>
-          <li><a href="/Logout">Logout</a></li>
+          <li><a href="/login">Logout</a></li>
         </ul>
       </div>
       <div className="content-area">

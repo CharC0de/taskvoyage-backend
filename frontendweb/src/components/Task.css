@@ -1,41 +1,35 @@
-.page-container {
-    display: flex;
-  }
-  
-  .sidebar2 {
+.sidebar3 {
     background-color: #5B3E31;
     display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 100vh; 
+    flex-direction: column; /* Display children in a column layout */
+    width:200px;
+    height: 589px;
   }
   
-  .logo2 {
+  .logo3 {
     display: flex;
-    align-items: center;
-    padding: 10px; 
-    width:50px;
-    height: 50px;
+    align-items: center; /* Align items vertically */
+    padding: 10px; /* Add padding for spacing */
   }
   
-  .ship-icon4 {
+  .ship-icon3 {
     width: 50px; /* Adjust the width to make the image smaller */
     height: 50px; /* Maintain aspect ratio */
     margin-right: 5px; /* Add some spacing between the icon and text */
   }
   
-  .navigation2 {
+  .navigation3 {
     list-style: none;
     padding: 0;
     margin-top: 50px; /* Add margin to separate logo from navigation */
     flex-direction: column;
   }
   
-  .navigation2 li {
+  .navigation3 li {
     margin-bottom: 30px; /* Add margin between each button */
   }
   
-  .navigation2 li a {
+  .navigation3 li a {
     text-decoration: none;
     color: #fff;
     display: block;
@@ -45,36 +39,38 @@
     transition: background-color 0.3s; /* Smooth transition for hover effect */
   }
   
-  .navigation2 li a:hover {
+  .navigation3 li a:hover {
     background-color: #6d392b; /* Change background color on hover */
   }
-  
-  .content {
-    /* Styles for the content area */
-    flex: 1;
-    padding: 20px;
+
+  .content-area {
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Add padding */
   }
   
-  .calendar-container {
-    /* Styles for the calendar container */
-    flex: 1;
-    padding: 20px;
-    width:500px;
-    height:300px;
-  }
-  .event-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the start of the column */
-    margin-bottom: 20px; /* Add some margin at the bottom */
+  h1 {
+    margin-bottom: 20px; /* Add margin below heading */
   }
   
-  .event-form label {
-    margin-bottom: 5px; /* Add margin below each label */
+  /* Styles for the task table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Add margin to separate from other content */
   }
   
-  .event-form input {
-    margin-bottom: 10px; /* Add margin below each input */
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
   }
   
+  th {
+    background-color: #f2f2f2; /* Background color for table headers */
+    color: #5B3E31;
+  }
   
+  /* Styles for action buttons */
+  button {
+    margin-right: 10px; /* Add margin to separate buttons */
+  }
