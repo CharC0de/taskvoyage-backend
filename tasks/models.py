@@ -45,9 +45,14 @@ class Task(models.Model):
     end_time = models.TimeField()
     description = models.TextField()
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    def __str__(self):
+        return self.title
 
 class Event(models.Model):
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
+    color = models.CharField(max_length=20, default='#000000')
+    def __str__(self):
+        return self.title
     
