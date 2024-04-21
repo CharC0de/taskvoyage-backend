@@ -1,3 +1,5 @@
+// AddTask.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -23,11 +25,17 @@ const AddTask = ({ onTaskAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send task data to the backend
-      const response = await axios.post('/api/tasks/', formData); // Updated URL
-      // Invoke the callback function to inform parent component of task addition
+      const csrftoken = getCookie('csrftoken'); // Function to get CSRF token
+      const response = await axios.post(
+        'http://localhost:8000/api/AddTask/',
+        formData,
+        {
+          headers: {
+            'X-CSRFToken': csrftoken,
+          },
+        }
+      );
       onTaskAdded(response.data);
-      // Clear form data
       setFormData({
         title: '',
         startDate: '',
@@ -87,3 +95,19 @@ const AddTask = ({ onTaskAdded }) => {
 };
 
 export default AddTask;
+
+// Function to get CSRF token
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
