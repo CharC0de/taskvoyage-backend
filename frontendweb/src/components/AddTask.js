@@ -29,7 +29,7 @@ const AddTask = ({ onTaskAdded }) => {
     try {
       const csrftoken = getCookie('csrftoken'); // Function to get CSRF token
       const response = await axios.post(
-        'http://localhost:8000/api/tasks/',
+        'http://localhost:8000/api/task/',
         formData,
         {
           headers: {
@@ -40,10 +40,10 @@ const AddTask = ({ onTaskAdded }) => {
       onTaskAdded(response.data);
       setFormData({
         title: '',
-        startDate: '',
-        endDate: '',
-        startTime: '',
-        endTime: '',
+        start_date: '',
+        end_date: '',
+        start_time: '',
+        end_time: '',
         description: '',
         category: '',
       });
@@ -77,19 +77,19 @@ const AddTask = ({ onTaskAdded }) => {
           </div>
           <div className="form-group">
             <label>Start Date:</label>
-            <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
+            <input type="date" name="start_date" value={formData.startDate} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Date:</label>
-            <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
+            <input type="date" name="end_date" value={formData.endDate} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Start Time:</label>
-            <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} required />
+            <input type="time" name="start_time" value={formData.startTime} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>End Time:</label>
-            <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} required />
+            <input type="time" name="end_time" value={formData.endTime} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Description:</label>

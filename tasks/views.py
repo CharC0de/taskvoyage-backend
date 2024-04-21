@@ -26,6 +26,7 @@ from .serializers import UserSerializer, TaskSerializer, EventSerializer
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from .models import CustomUser, Task, Event
+from rest_framework.generics import ListCreateAPIView
 
 
 class UserCreateView(APIView):
@@ -100,7 +101,7 @@ class EmailConfirmationView(APIView):
         else:
             return Response({'error': 'Invalid activation link'+str(uidb64)+" "+str(request)}, status=status.HTTP_400_BAD_REQUEST)
  
-class TaskCreateView(APIView):
+class TaskCreateViewListCreateAPIView(ListCreateAPIView):
     def post(self, request):
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
@@ -110,7 +111,7 @@ class TaskCreateView(APIView):
             print(serializer.errors)  # Print serializer errors
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class TaskListView(APIView):
+class TaskListViewListCreateAPIView(ListCreateAPIView):
     def get(self, request):
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
@@ -123,7 +124,7 @@ class TaskListView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class TaskDetailView(APIView):
+class TaskDetailViewListCreateAPIView(ListCreateAPIView):
     def get_object(self, pk):
         try:
             return Task.objects.get(pk=pk)
@@ -148,7 +149,7 @@ class TaskDetailView(APIView):
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class EventCreateView(APIView):
+class EventCreateViewListCreateAPIView(ListCreateAPIView):
     def post(self, request):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():

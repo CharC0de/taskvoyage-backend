@@ -30,24 +30,24 @@ class EmailConfirmationToken(models.Model):
         default_permissions = ()
         
 class Task(models.Model):
+    CATEGORY_CHOICES = [
+        ('Personal', 'Personal'),
+        ('Work', 'Work'),
+        ('Education', 'Education'),
+        ('Sports', 'Sports'),
+        ('Health', 'Health'),
+    ]
+
     title = models.CharField(max_length=255)
     start_date = models.DateField()
     end_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     description = models.TextField()
-    category = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.title
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
 class Event(models.Model):
     title = models.CharField(max_length=255)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    description = models.TextField()
-
-    def __str__(self):
-        return self.title
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    

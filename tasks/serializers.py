@@ -51,10 +51,10 @@ class EmailConfirmationSerializer(serializers.Serializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category']
+        fields = ['title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category']
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'title', 'start_date', 'end_date', 'start_time', 'end_time', 'description']
+        fields = ['title', 'start', 'end']
 

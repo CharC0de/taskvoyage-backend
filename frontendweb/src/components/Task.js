@@ -11,7 +11,7 @@ const Tasks = () => {
 
   useEffect(() => {
     // Fetch tasks from backend
-    axios.get('/api/tasks')
+    axios.get('/api/task')
       .then(response => {
         setTasks(response.data);
       })
