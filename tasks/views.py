@@ -20,12 +20,13 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from .models import CustomUser, EmailConfirmationToken
-from .serializers import UserSerializer
+from rest_framework import status, generics
+from .models import CustomUser, EmailConfirmationToken, Task, Event
+from .serializers import UserSerializer, TaskSerializer, EventSerializer
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
-from .models import CustomUser
+from .models import CustomUser, Task, Event
+
 
 
 class UserCreateView(APIView):
@@ -99,3 +100,19 @@ class EmailConfirmationView(APIView):
             return Response({'message': 'Account activated successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid activation link'+str(uidb64)+" "+str(request)}, status=status.HTTP_400_BAD_REQUEST)
+
+class TaskListCreate(generics.ListCreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+class TaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+class EventListCreate(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    
+class EventRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer

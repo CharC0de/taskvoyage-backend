@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, Task, Event
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from djoser.serializers import UserCreateSerializer, ActivationSerializer
@@ -46,3 +46,13 @@ class LoginSerializer(serializers.Serializer):
 class EmailConfirmationSerializer(serializers.Serializer):
     uid = serializers.CharField()
     token = serializers.CharField()
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'
