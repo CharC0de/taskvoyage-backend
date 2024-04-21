@@ -35,7 +35,7 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     // Redirect to add task page
-    navigate('/add-task'); // Navigate to the add task page
+    navigate('/AddTask'); // Navigate to the add task page
   };
 
   const handleMarkAsOngoing = (id) => {
