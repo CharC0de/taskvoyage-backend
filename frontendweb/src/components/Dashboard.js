@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./Dashboard.css";
 
-
 const Dashboard = () => {
-  const [tasks, setTasks] = useState([]);
+  const [ongoingTasks, setOngoingTasks] = useState([]);
 
   useEffect(() => {
-    // Fetch tasks from backend
-    axios.get('/api/task')
+    // Fetch ongoing tasks from backend
+    axios.get('http://localhost:8000/api/task/?status=Ongoing')
       .then(response => {
-        setTasks(response.data);
+        setOngoingTasks(response.data);
       })
       .catch(error => {
-        console.error('Error fetching tasks:', error);
+        console.error('Error fetching ongoing tasks:', error);
       });
   }, []);
 
@@ -32,12 +31,34 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="content-area">
-        <h1>Tasks Summary</h1>
-        <ul>
-          {tasks.map(task => (
-            <li key={task.id}>{task.title}</li>
-          ))}
-        </ul>
+        <h1>Task Summary</h1>
+        <h2>Ongoing Tasks</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Description</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ongoingTasks.map(task => (
+              <tr key={task.id}>
+                <td>{task.title}</td>
+                <td>{task.start_date}</td>
+                <td>{task.end_date}</td>
+                <td>{task.start_time}</td>
+                <td>{task.end_time}</td>
+                <td>{task.description}</td>
+                <td>{task.category}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
