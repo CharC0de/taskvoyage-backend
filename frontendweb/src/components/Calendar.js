@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
-const Calendar = () => {
+const CalendarPage = () => {
   const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     // Fetch events from backend
@@ -12,12 +13,25 @@ const Calendar = () => {
 
   const handleEventClick = (info) => {
     // Handle event click
-    // Implement this if you want to perform any action when an event is clicked
+    setSelectedEvent(info.event);
+  };
+
+  const handleEventDelete = () => {
+    // Delete event from the calendar
+    setEvents(events.filter(event => event !== selectedEvent));
+    // Implement deleting the event from the backend if needed
+    setSelectedEvent(null);
+  };
+
+  const handleCancel = () => {
+    // Clear the selected event
+    setSelectedEvent(null);
   };
 
   const handleEventRender = (info) => {
     // Customize event rendering
     // You can modify event colors or other properties here
+    info.el.querySelector('.fc-content').innerHTML += `<button onClick="handleDeleteClick(${info.event.id})">Delete</button>`;
   };
 
   const handleEventAdd = (event) => {
@@ -27,17 +41,53 @@ const Calendar = () => {
   };
 
   return (
+    <div className="page-container">
+      <div className="sidebar2">
+        <div className="logo2">
+          <img src="./img/ship.png" alt="Ship Icon4" className="ship-icon4"/>  <span>TaskVoyage</span>
+        </div>
+        <ul className="navigation2">
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/Task">Tasks</a></li>
+          <li><a href="/Calendar">Calendar</a></li>
+          <li><a href="/Settings">Settings</a></li>
+          <li><a href="/Logout">Logout</a></li>
+        </ul>
+      </div>
+      <div className="content">
+        <h1>Calendar</h1>
+        {/* Add event form */}
+        <EventForm addEvent={handleEventAdd} />
+      </div>
+      <div className="calendar-container">
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          eventClick={handleEventClick}
+          eventRender={handleEventRender}
+        />
+        {selectedEvent && (
+          <EventDetails
+            event={selectedEvent}
+            onDelete={handleEventDelete}
+            onCancel={handleCancel}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const EventDetails = ({ event, onDelete, onCancel }) => {
+  return (
     <div>
-      <h1>Calendar</h1>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        eventClick={handleEventClick}
-        eventRender={handleEventRender}
-      />
-      {/* Add event form */}
-      <EventForm addEvent={handleEventAdd} />
+      <h2>Event Details</h2>
+      <p>Title: {event.title}</p>
+      <p>Start: {event.startStr}</p>
+      <p>End: {event.endStr}</p>
+      <button onClick={onDelete}>Delete</button>
+      <button onClick={onCancel}>Cancel</button>
     </div>
   );
 };
@@ -84,4 +134,4 @@ const EventForm = ({ addEvent }) => {
   );
 };
 
-export default Calendar;
+export default CalendarPage;
