@@ -31,7 +31,6 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="content-area">
-        {/* Dashboard content goes here */}
         <h1>Tasks Summary</h1>
         <ul>
           {tasks.map(task => (

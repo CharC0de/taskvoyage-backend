@@ -1,10 +1,13 @@
+// Tasks.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useHistory for navigation
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate(); // Initialize useHistory
 
   useEffect(() => {
     // Fetch tasks from backend
@@ -32,7 +35,7 @@ const Tasks = () => {
 
   const handleAddTask = () => {
     // Redirect to add task page
-    // This could be implemented in future versions
+    navigate('/add-task'); // Navigate to the add task page
   };
 
   const handleMarkAsOngoing = (id) => {
@@ -78,7 +81,7 @@ const Tasks = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button onClick={handleSearch}>Search</button>
-      <button onClick={handleAddTask}>Add Task</button>
+      <button onClick={handleAddTask}>Add Task</button> {/* Fix the Add Task button */}
       <table>
         <thead>
           <tr>
