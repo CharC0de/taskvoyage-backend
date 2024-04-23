@@ -31,6 +31,11 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="content-area">
+        <h1>AHOOY MATEY!!</h1>
+            <p>Task Voyage helps students stay focused and productive
+              during their academic journey by simplifying the process 
+              of prioritizing tasks, tracking progress, and ensuring timely
+              completion with features that are specialized to deadlines. </p>
         <h1>Task Summary</h1>
         <h2>Ongoing Tasks</h2>
         <table>
