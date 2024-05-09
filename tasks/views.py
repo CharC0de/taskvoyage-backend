@@ -87,9 +87,9 @@ class LoginView(APIView):
         return Response({'message': 'Logged in successfully'}, status=status.HTTP_200_OK)
 
 class EmailConfirmationView(APIView):
-    def get(self, request, uidb64, token):
+    def get(self, request, uid, token):
         try:
-            user = CustomUser.objects.get(id=uidb64)
+            user = CustomUser.objects.get(id=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist, DjangoUnicodeDecodeError):
             user = None
 
@@ -99,7 +99,7 @@ class EmailConfirmationView(APIView):
             user.save()
             return Response({'message': 'Account activated successfully'}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Invalid activation link'+str(uidb64)+" "+str(request)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Invalid activation link'+str(uid)+" "+str(request)}, status=status.HTTP_400_BAD_REQUEST)
  
 class TaskCreateViewListCreateAPIView(ListCreateAPIView):
     def post(self, request):

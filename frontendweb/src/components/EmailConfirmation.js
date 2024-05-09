@@ -16,7 +16,7 @@ const EmailConfirmation = () => {
                 setConfirmationMessage('Email confirmation successful! You can now log in.');
                 setErrorMessage('');
             } catch (error) {
-                setErrorMessage('Email confirmation failed. Please try again.');
+                setErrorMessage('Please check your email');
                 setConfirmationMessage('');
             }
         };
