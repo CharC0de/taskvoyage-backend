@@ -1,0 +1,78 @@
+/* FAQ.css */
+
+.faq {
+    display: flex;
+  }
+  
+  .sidebar {
+    background-color: #5B3E31;
+    width: 200px;
+    height: 100vh;
+    position: fixed; /* Set sidebar to fixed position */
+    overflow-y: auto; /* Add vertical scroll */
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .ship-icon3 {
+    width: 30px;
+    height: auto;
+    margin-right: 5px;
+  }
+  
+  .navigation {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+    flex-direction: column;
+  }
+  
+  .navigation li {
+    margin-bottom: 30px;
+  }
+  
+  .navigation li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 10px;
+    background-color: #874c3c;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .navigation li a:hover {
+    background-color: #6d392b;
+  }
+  
+  .faq-container {
+    flex: 1;
+    padding: 20px;
+    margin-left: 200px; /* Adjust margin to accommodate fixed sidebar */
+    overflow-y: auto; /* Add vertical scroll */
+  }
+  
+  h2, h3 {
+    color: #333;
+  }
+  
+  .faq-section {
+    margin-bottom: 40px;
+  }
+  
+  ol {
+    margin-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
