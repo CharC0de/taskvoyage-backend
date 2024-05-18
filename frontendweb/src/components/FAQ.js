@@ -6,7 +6,7 @@ import './FAQ.css'; // Import CSS file for styling
 const FAQ = () => {
   return (
     <div className="faq">
-      <div className="sidebar">
+      <div className="sidebar1">
         <div className="logo">
           <img src="./img/ship.png" alt="Ship Icon3" className="ship-icon3"/>  <span>TaskVoyage</span>
         </div>

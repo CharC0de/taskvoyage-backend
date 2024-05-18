@@ -37,7 +37,7 @@ export default function Login() {
 
             if (response.status === 200) {
                 console.log('User logged in successfully');
-                navigate('/dashboard');
+                navigate('/Dashboard');
             } else {
                 const data = response.data;
                 setError(data.message);

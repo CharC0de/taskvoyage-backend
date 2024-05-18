@@ -65,7 +65,10 @@ const Task = () => {
       </ul>
       </div>
       <div className="content-area">
-        {/* Content area */}
+        <div className="introduction">
+          <img src="./img/parrot.png" alt="Pirate Avatar" className="pirate-avatar"/>
+          <h1>WHAT ARE YOUR PLANS TODAY MATEY?</h1>
+        </div>
         <h1>Tasks</h1>
         <input
           type="text"
@@ -73,8 +76,10 @@ const Task = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={handleAddTask}>Add Task</button>
+        <div className="button-container">
+          <button onClick={handleSearch}>Search</button>
+          <button onClick={handleAddTask}>Add Task</button>
+        </div>
         {/* Task table */}
         <table>
           {/* Table headers */}
