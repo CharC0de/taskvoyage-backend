@@ -9,7 +9,7 @@ import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
 import Dashboard from './Dasboard';
 
-function CalendarScreen({ navigation }) {
+function Calendar({ navigation }) {
   const [selectedDate, setSelectedDate] = useState('');
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -199,7 +199,7 @@ export default function App() {
       <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen name="Home" component={Dashboard} />
         <Drawer.Screen name="AddTask" component={AddTask} />
-        <Drawer.Screen name="Calendar" component={CalendarScreen} />
+        <Drawer.Screen name="Calendar" component={Calendar} />
         <Drawer.Screen name="Settings" component={SettingsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
