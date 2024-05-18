@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Calendar as RNCalendar } from 'react-native-calendars';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
+import Dashboard from './Dasboard';
 
-export default function Calendar() {
+function CalendarScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState('');
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -60,8 +64,9 @@ export default function Calendar() {
 
   return (
     <View style={styles.container}>
+      <Icon name="bars" size={30} color="#000" onPress={() => navigation.toggleDrawer()} />
       <Button title="Add Event" onPress={() => setModalVisible(true)} />
-      <Calendar
+      <RNCalendar
         onDayPress={(day) => {
           setSelectedDate(day.dateString);
           setSelectedEvent(null);
@@ -135,6 +140,72 @@ export default function Calendar() {
   );
 }
 
+// Placeholder components for other screens
+function HomeScreen() {
+  return (
+    <View style={styles.screenContainer}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
+function AddTaskScreen() {
+  return (
+    <View style={styles.screenContainer}>
+      <Text>Add Task Screen</Text>
+    </View>
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <View style={styles.screenContainer}>
+      <Text>Settings Screen</Text>
+    </View>
+  );
+}
+
+// Custom drawer content
+function CustomDrawerContent({ navigation }) {
+  const handleLogout = () => {
+    Alert.alert('Confirm', 'Are you sure you want to logout your account?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => navigation.replace('Login'),
+      },
+    ]);
+  };
+
+  return (
+    <View style={styles.drawerContent}>
+      <Button title="Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+      <Button title="Tasks" onPress={() => navigation.navigate('AddTask')} />
+      <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
+      <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
+      <Button title="Logout" onPress={handleLogout} />
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name="Home" component={Dashboard} />
+        <Drawer.Screen name="AddTask" component={AddTask} />
+        <Drawer.Screen name="Calendar" component={CalendarScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -161,5 +232,15 @@ const styles = StyleSheet.create({
   datePicker: {
     width: '100%',
     marginBottom: 10,
+  },
+  screenContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  drawerContent: {
+    flex: 1,
+    paddingTop: 20,
+    paddingHorizontal: 10,
   },
 });

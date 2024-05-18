@@ -45,70 +45,70 @@ function HomeScreen({ navigation }) {
 }
 
 // Placeholder components for other screens
-function TasksScreen() {
-  return (
-    <View style={styles.screenContainer}>
-      <Text>Tasks Screen</Text>
-    </View>
-  );
-}
-
-function CalendarScreen() {
-  return (
-    <View style={styles.screenContainer}>
-      <Text>Calendar Screen</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.screenContainer}>
-      <Text>Settings Screen</Text>
-    </View>
-  );
-}
-
-// Custom drawer content
-function CustomDrawerContent({ navigation }) {
-  const handleLogout = () => {
-    Alert.alert('Confirm', 'Are you sure you want to logout your account?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => navigation.replace('Login'),
-      },
-    ]);
-  };
-
-  return (
-    <View style={styles.drawerContent}>
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Tasks" onPress={() => navigation.navigate('Tasks')} />
-      <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
-      <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
-      <Button title="Logout" onPress={handleLogout} />
-    </View>
-  );
-}
-
-const Drawer = createDrawerNavigator();
-
-export default function Dashboard() {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Tasks" component={TasksScreen} />
-        <Drawer.Screen name="Calendar" component={CalendarScreen} />
-        <Drawer.Screen name="Settings" component={SettingsScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-}
+function HomeScreen() {
+    return (
+      <View style={styles.screenContainer}>
+        <Text>Home Screen</Text>
+      </View>
+    );
+  }
+  
+  function AddTaskScreen() {
+    return (
+      <View style={styles.screenContainer}>
+        <Text>Add Task Screen</Text>
+      </View>
+    );
+  }
+  
+  function SettingsScreen() {
+    return (
+      <View style={styles.screenContainer}>
+        <Text>Settings Screen</Text>
+      </View>
+    );
+  }
+  
+  // Custom drawer content
+  function CustomDrawerContent({ navigation }) {
+    const handleLogout = () => {
+      Alert.alert('Confirm', 'Are you sure you want to logout your account?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => navigation.replace('Login'),
+        },
+      ]);
+    };
+  
+    return (
+      <View style={styles.drawerContent}>
+        <Button title="Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+        <Button title="Tasks" onPress={() => navigation.navigate('AddTask')} />
+        <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
+        <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
+        <Button title="Logout" onPress={handleLogout} />
+      </View>
+    );
+  }
+  
+  const Drawer = createDrawerNavigator();
+  
+  export default function App() {
+    return (
+      <NavigationContainer>
+        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+          <Drawer.Screen name="Home" component={Dashboard} />
+          <Drawer.Screen name="AddTask" component={AddTask} />
+          <Drawer.Screen name="Calendar" component={CalendarScreen} />
+          <Drawer.Screen name="Settings" component={SettingsScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {
