@@ -9,7 +9,7 @@ import Task from './components/Task';
 import Calendar from './components/Calendar';
 import Logout from './components/Logout';
 import AddTask from './components/AddTask';
-import FAQ from './components/FAQ';
+import Settings from "./components/Settings";
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
         <Route exact path="/calendar" element={<Calendar/>} />
         <Route exact path="/logout" element={<Logout/>} />
         <Route exact path="/AddTask" element={<AddTask/>} />
-        <Route exact path="/FAQ" element={<FAQ/>} />
+        <Route exact path="/Settings" element={<Settings/>}/>
 
 
         <Route

@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#874c3c',
+
   },
   header: {
     flexDirection: 'row',
@@ -124,10 +126,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginLeft: 10,
+    color: '#F9F9F9',
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
+    color: '#F9F9F9',
   },
   taskItem: {
     marginBottom: 15,

@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#874c3c',
   },
   eventDetails: {
     padding: 15,

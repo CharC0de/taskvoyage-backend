@@ -30,7 +30,7 @@ const AddTask = ({ onTaskAdded }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/task/',
+        'http://localhost:8000/api/tasks/',
         formData
       );
       onTaskAdded(response.data);
@@ -65,7 +65,6 @@ const AddTask = ({ onTaskAdded }) => {
         <li><a href="/Task">Tasks</a></li>
         <li><a href="/Calendar">Calendar</a></li>
         <li><a href="/Settings">Settings</a></li>
-        <li><a href = "/FAQ">FAQ</a></li>
         <li><a href="/login">Logout</a></li>
       </ul>
       </div>

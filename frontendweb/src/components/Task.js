@@ -60,7 +60,6 @@ const Task = () => {
         <li><a href="/Task">Tasks</a></li>
         <li><a href="/Calendar">Calendar</a></li>
         <li><a href="/Settings">Settings</a></li>
-        <li><a href = "/FAQ">FAQ</a></li>
         <li><a href="/login">Logout</a></li>
       </ul>
       </div>

@@ -1,121 +1,120 @@
 .dashboard {
   display: flex;
-  height: 100vh; /* Set page height to full viewport height */
-}
-
-.sidebar {
-  background-color: #5B3E31;
-  display: flex;
-  flex-direction: column; /* Display children in a column layout */
-  width: 200px;
-  height: 589px;
-}
-
-.logo {
-  display: flex;
-  align-items: center; /* Align items vertically */
-  padding: 10px; /* Add padding for spacing */
-  width:60px;
-  height: auto;
-}
-
-.ship-icon3 {
-  width: 60px; /* Adjust the width to make the image smaller */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 5px; /* Add some spacing between the icon and text */
-}
-
-.navigation {
-  list-style: none;
-  padding: 0;
-  margin-top: 50px; /* Add margin to separate logo from navigation */
-  flex-direction: column;
-}
-
-.navigation li {
-  margin-bottom: 30px; /* Add margin between each button */
-}
-
-.navigation li a {
-  text-decoration: none;
-  color: #fff;
-  display: block;
-  padding: 10px; /* Add padding to make each button clickable */
-  background-color: #874c3c; /* Background color for buttons */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.navigation li a:hover {
-  background-color: #6d392b; /* Change background color on hover */
-}
-
-.content-area {
-  flex: 3; /* Expand content area to fill remaining space */
-  padding: 20px;
-}
-
-.introduction {
-  margin-bottom: 20px; /* Add margin to separate from other content */
-  display: flex;
-  align-items: center; /* Center items vertically */
-  background-color: #f0f0f0; /* Bubble background color */
-  padding: 20px; /* Add padding */
-  border-radius: 20px; /* Border radius for bubble effect */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-}
-
-h1, p {
-  margin: 5; /* Remove default margins */
-  color: black;
-  gap:10px;
-
-}
-
-h1 {
-  font-size: 30px; /* Adjust font size */
-  color: black;
-  margin:5px;
-
-}
-
-p {
-  font-size: 16px; /* Adjust font size */
-  color: black;
-
+  height: 100vh; /* Full viewport height */
+  position: relative;
+  background: url('./images/background.png') no-repeat center center fixed; /* Background image */
+  background-size: cover; /* Cover the entire container */
+  background-color: rgba(0, 0, 0, 0.38); /* Lower opacity */
 }
 
 .dashboard::before {
   content: '';
-  background: url('./images/background.png') no-repeat center center/cover; /* Background image */
-  opacity: 0.3; /* Adjust opacity */
-  position: absolute; /* Overlay */
-  top: 0; 
+  background: rgba(255, 0, 0, 0.174); /* Lower opacity */
+  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: -1; /* Behind content */
 }
 
-.pirate-avatar {
-  width: 150px; /* Set width of the pirate avatar */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 15px; /* Add spacing between the avatar and the heading */
+.sidebar {
+  background-color: #5B3E31;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 100%;
+  position: fixed; /* Fixed position */
+  top: 0;
+  left: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.content-area h1 {
-  margin-bottom: 20px; /* Add margin below heading */
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 10px 0; /* Vertical padding for spacing */
 }
 
-.content-area ul {
+.ship-icon3 {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.navigation {
   list-style: none;
   padding: 0;
-  margin: 0;
-  text-align: center; /* Center list items */
+  margin-top: 30px;
+  flex: 1;
 }
 
-.content-area ul li {
-  margin-bottom: 10px; /* Add margin between each list item */
+.navigation li {
+  margin-bottom: 20px;
+}
+
+.navigation li a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  padding: 10px;
+  background-color: #874c3c;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.navigation li a:hover {
+  background-color: #6d392b;
+}
+
+.content-area {
+  margin-left: 220px; /* Margin to the right of the fixed sidebar */
+  flex: 1;
+  padding: 40px;
+  position: relative;
+}
+
+.introduction {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.introduction .pirate-avatar {
+  width: 100px; /* Adjust width of the avatar */
+  height: auto;
+  margin-right: 20px;
+}
+
+.introduction h1, .introduction p {
+  margin: 0;
+}
+
+h1, p {
+  color: black;
+}
+
+.text-box {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.text-box h2{
+  color: black;
+}
+
+p {
+  font-size: 16px;
 }
 
 table {
@@ -127,7 +126,6 @@ table {
 
 table, th, td {
   border: 1px solid #ddd;
-  
 }
 
 th, td {
@@ -136,6 +134,6 @@ th, td {
 }
 
 th {
-  background-color:#6d392b;
-  color:#f2f2f2;
+  background-color: #6d392b;
+  color: white;
 }

@@ -82,7 +82,6 @@ const CalendarPage = () => {
         <li><a href="/Task">Tasks</a></li>
         <li><a href="/Calendar">Calendar</a></li>
         <li><a href="/Settings">Settings</a></li>
-        <li><a href = "/FAQ">FAQ</a></li>
         <li><a href="/login">Logout</a></li>
       </ul>
       </div>
@@ -115,11 +114,11 @@ const CalendarPage = () => {
 
 const EventDetails = ({ event, onDelete, onCancel }) => {
   return (
-    <div>
-      <h2>Event Details</h2>
-      <p>Title: {event.title}</p>
-      <p>Start: {event.startStr}</p>
-      <p>End: {event.endStr}</p>
+    <div className='details-container'>
+      <h1>Event Details</h1>
+      <h3>Title: {event.title}</h3>
+      <h3>Start: {event.startStr}</h3>
+      <h3>End: {event.endStr}</h3>
       <button onClick={onDelete}>Delete</button>
       <button onClick={onCancel}>Cancel</button>
     </div>

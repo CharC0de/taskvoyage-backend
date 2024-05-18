@@ -56,6 +56,10 @@
     overflow-y: auto; /* Enable vertical scrolling for the content area */
     margin-left: 200px; /* Adjust for the fixed sidebar width */
   }
+
+  .content h1{
+    color: black;
+  }
   
   .calendar-container {
     flex: 1;
@@ -70,12 +74,29 @@
     align-items: flex-start;
     margin-bottom: 20px;
   }
+
+  .event-form h2{
+    color: black;
+  }
   
   .event-form label {
     margin-bottom: 5px;
+    color: black;
+    font:bold;
   }
   
   .event-form input {
     margin-bottom: 10px;
+    color:black;
   }
+
+  .calendar-container h1{
+    color: black;
+  }
+
+  .calendar-container h3{
+    color: black;
+  }
+
+
   
