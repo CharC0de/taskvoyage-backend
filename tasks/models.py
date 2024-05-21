@@ -15,6 +15,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
+    confirm_password = models.CharField(max_length=100)
     verified = models.BooleanField(default=False)
     groups = models.ManyToManyField(
         Group, related_name='custom_user_set', blank=True, verbose_name=_('groups'), help_text=_('The groups this user belongs to. A user will get all permissions granted to each of their groups.'),

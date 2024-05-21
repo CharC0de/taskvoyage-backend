@@ -31,7 +31,7 @@ const AddTask = ({ onTaskAdded }) => {
     try {
       const userId = localStorage.getItem('userId');
       const response = await axios.post(
-        'http://localhost:8000/api/tasks/',
+        'http://localhost:8000/api/task/',
         { ...formData, userId } // Include userId in the task data
       );
       onTaskAdded(response.data);

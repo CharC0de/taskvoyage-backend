@@ -71,10 +71,12 @@
 }
 
 .content-area {
-  margin-left: 220px; /* Margin to the right of the fixed sidebar */
+  margin-left: 200px; /* Margin to the right of the fixed sidebar */
   flex: 1;
   padding: 40px;
   position: relative;
+  background-color: rgba(0, 0, 0, 0.38); /* Lower opacity */
+
 }
 
 .introduction {
