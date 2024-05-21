@@ -101,7 +101,7 @@ function AddTask() {
   );
 }
 
-function SettingsScreen() {
+function Settings() {
   return (
     <View style={styles.screenContainer}>
       <Text>Settings</Text>

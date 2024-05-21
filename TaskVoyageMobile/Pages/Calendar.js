@@ -151,7 +151,7 @@ function Calendar({ navigation }) {
 }
 
 // Placeholder components for other screens
-function Dashboard() {
+function Homepage() {
   return (
     <View style={styles.screenContainer}>
       <Text>Homepage</Text>

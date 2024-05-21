@@ -4,9 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Login from '../Pages/Login'
 import EmailConfirmation from '../Pages/EmailConfirmation'
 import Register from '../Pages/Register'
-import Dashboard from '../Pages/Dashboard'
 import AddTask from '../Pages/AddTask'
+import Dashboard from '../Pages/Dasboard'
 import Settings from '../Pages/Settings'
+import Calendar from '../Pages/Calendar'
 
 
 

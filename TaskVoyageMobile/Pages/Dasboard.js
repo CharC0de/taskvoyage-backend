@@ -7,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar } from 'react-native-paper';
 import axios from 'axios';
 
-// HomeScreen component (Dashboard)
 function Dashboard({ navigation }) {
   const [tasks, setTasks] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -60,7 +59,7 @@ function Dashboard({ navigation }) {
 }
 
 // Placeholder components for other screens
-function Dashboard() {
+function Homepage() {
   return (
     <View style={styles.screenContainer}>
       <Text>Homepage</Text>
