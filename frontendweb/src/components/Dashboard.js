@@ -6,8 +6,9 @@ const Dashboard = () => {
   const [ongoingTasks, setOngoingTasks] = useState([]);
 
   useEffect(() => {
-    // Fetch ongoing tasks from backend
-    axios.get('http://localhost:8000/api/task/?status=Ongoing')
+    // Fetch ongoing tasks for the logged-in user from backend
+    const userId = localStorage.getItem('userId');
+    axios.get(`http://localhost:8000/api/task/?status=Ongoing&userId=${userId}`)
       .then(response => {
         setOngoingTasks(response.data);
       })
@@ -39,10 +40,10 @@ const Dashboard = () => {
           </div>
         </div>
         <div className='text-box'>
-        <h1>Task Summary</h1>
+          <h1>Task Summary</h1>
         </div>
         <div className='text-box'>
-        <h2>Ongoing Tasks</h2>
+          <h2>Ongoing Tasks</h2>
         </div>
         <table>
           <thead>

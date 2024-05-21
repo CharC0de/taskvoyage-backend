@@ -30,7 +30,7 @@ from rest_framework.generics import ListCreateAPIView
 
 
 class UserCreateView(APIView):
-
+    
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -57,35 +57,38 @@ class UserCreateView(APIView):
 
 
 class LoginView(APIView):
-
     def post(self, request):
-        authuser = get_user_model()
         username_or_email = request.data.get('user')
         password = request.data.get('password')
-        scenario =0
+        scenario = 0
 
         if username_or_email is None or password is None:
             return Response({'error': 'Please provide both username/email and password'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the input is an email address
         if '@' in username_or_email:
-            scenario=1
+            scenario = 1
             # Attempt to authenticate with email
             user = authenticate(request, email=username_or_email, password=password)
         else:
-            scenario=2
+            scenario = 2
             # Attempt to authenticate with username
             user = authenticate(request, username=username_or_email, password=password)
 
         if user is None:
-            return Response({'error': 'Invalid Credentials'+str(scenario)+str(authuser.objects.all()[0])}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Invalid Credentials ' + str(scenario)}, status=status.HTTP_404_NOT_FOUND)
 
         if not user.is_active:
             return Response({'error': 'Please activate your account'}, status=status.HTTP_403_FORBIDDEN)
 
         login(request, user)
-        return Response({'message': 'Logged in successfully'}, status=status.HTTP_200_OK)
+        return Response({
+            'message': 'Logged in successfully',
+            'userId': user.userId  # Use user.userId instead of user.pk
+        }, status=status.HTTP_200_OK)
 
+
+        
 class EmailConfirmationView(APIView):
     def get(self, request, uid, token):
         try:

@@ -6,32 +6,30 @@ from djoser.serializers import UserCreateSerializer, ActivationSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(
-        write_only=True)  # Add confirm_password field
+    confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'first_name', 'last_name', 'username',
+        fields = ['userId', 'first_name', 'last_name', 'username',
                   'email', 'password', 'confirm_password', 'verified']
 
     def create(self, validated_data):
         # Remove confirm_password from validated_data
-        print(str(validated_data))
+        confirm_password = validated_data.pop('confirm_password')
         user = CustomUser.objects.create_user(**validated_data)
         return user
 
     def validate(self, attrs):
         # Remove confirm_password from attrs
         confirm_password = attrs.pop('confirm_password')
-        user = CustomUser(**attrs)
         password = attrs.get('password')
 
         if confirm_password != password:
             raise serializers.ValidationError(
-                {'confirm_password': 'Passwords do not match'+str(confirm_password)})
+                {'confirm_password': 'Passwords do not match'})
 
         try:
-            validate_password(password, self.instance)
+            validate_password(password)
         except DjangoValidationError as e:
             raise serializers.ValidationError({'password': str(e)})
 

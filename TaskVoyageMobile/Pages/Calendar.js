@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, Alert, AsyncStorage } from 'react-native'; // Import AsyncStorage
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,6 +23,15 @@ function Calendar({ navigation }) {
     description: '',
   });
 
+  // Retrieve user ID from AsyncStorage
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem('userId').then((id) => {
+      setUserId(id);
+    });
+  }, []);
+
   useEffect(() => {
     if (selectedDate) {
       fetchEvents(selectedDate);
@@ -31,7 +40,7 @@ function Calendar({ navigation }) {
 
   const fetchEvents = async (date) => {
     try {
-      const response = await axios.get('http://172.20.10.5:8000/api/events/?date=${date}');
+      const response = await axios.get(`http://172.20.10.5:8000/api/events/?date=${date}&userId=${userId}`);
       setEvents(response.data);
     } catch (error) {
       console.error(error);
@@ -40,7 +49,8 @@ function Calendar({ navigation }) {
 
   const addEvent = async () => {
     try {
-      await axios.post('http://172.20.10.5:8000/api/events/', newEvent);
+      const eventWithUserId = { ...newEvent, userId };
+      await axios.post('http://172.20.10.5:8000/api/events/', eventWithUserId);
       Alert.alert('Success', 'Event added successfully');
       setModalVisible(false);
       fetchEvents(selectedDate);
@@ -141,18 +151,18 @@ function Calendar({ navigation }) {
 }
 
 // Placeholder components for other screens
-function HomeScreen() {
+function Dashboard() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Home Screen</Text>
+      <Text>Homepage</Text>
     </View>
   );
 }
 
-function AddTaskScreen() {
+function AddTask() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Add Task Screen</Text>
+      <Text>Tasks</Text>
     </View>
   );
 }
@@ -160,7 +170,7 @@ function AddTaskScreen() {
 function SettingsScreen() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Settings Screen</Text>
+      <Text>Settings</Text>
     </View>
   );
 }
@@ -197,7 +207,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={Dashboard} />
+        <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="AddTask" component={AddTask} />
         <Drawer.Screen name="Calendar" component={Calendar} />
         <Drawer.Screen name="Settings" component={SettingsScreen} />

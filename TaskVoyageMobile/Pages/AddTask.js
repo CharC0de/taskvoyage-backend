@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 function AddTask({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -20,10 +21,26 @@ function AddTask({ navigation }) {
     endTime: '',
     category: '',
   });
+  const [userId, setUserId] = useState(null); // Add userId state
+
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const fetchUserId = async () => {
+    try {
+      const id = await AsyncStorage.getItem('userId');
+      if (id !== null) {
+        setUserId(id);
+      }
+    } catch (error) {
+      console.error('Error fetching userId from AsyncStorage:', error);
+    }
+  };
 
   const searchTasks = async () => {
     try {
-      const response = await axios.get('http://172.20.10.5:8000/api/tasks/?search=${searchQuery}');
+      const response = await axios.get(`http://172.20.10.5:8000/api/tasks/?search=${searchQuery}&userId=${userId}`); // Include userId in the search query
       setTasks(response.data);
     } catch (error) {
       console.error(error);
@@ -32,7 +49,7 @@ function AddTask({ navigation }) {
 
   const addTask = async () => {
     try {
-      await axios.post('http://your-django-backend-url/api/tasks/', newTask);
+      await axios.post('http://your-django-backend-url/api/tasks/', { ...newTask, userId }); // Include userId in the task data
       Alert.alert('Success', 'Task added successfully');
       setModalVisible(false);
       searchTasks();
@@ -149,18 +166,18 @@ function AddTask({ navigation }) {
 }
 
 // Placeholder components for other screens
-function HomeScreen() {
+function Dashboard() {
     return (
       <View style={styles.screenContainer}>
-        <Text>Home Screen</Text>
+        <Text>Homepage</Text>
       </View>
     );
   }
   
-  function AddTaskScreen() {
+  function TasksScreen() {
     return (
       <View style={styles.screenContainer}>
-        <Text>Add Task Screen</Text>
+        <Text>Tasks</Text>
       </View>
     );
   }
@@ -168,7 +185,7 @@ function HomeScreen() {
   function SettingsScreen() {
     return (
       <View style={styles.screenContainer}>
-        <Text>Settings Screen</Text>
+        <Text>Settings</Text>
       </View>
     );
   }
@@ -191,7 +208,7 @@ function HomeScreen() {
     return (
       <View style={styles.drawerContent}>
         <Button title="Dashboard" onPress={() => navigation.navigate('Dashboard')} />
-        <Button title="Tasks" onPress={() => navigation.navigate('AddTask')} />
+        <Button title="Tasks" onPress={() => navigation.navigate('Tasks')} />
         <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
         <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
         <Button title="Logout" onPress={handleLogout} />
@@ -205,63 +222,64 @@ function HomeScreen() {
     return (
       <NavigationContainer>
         <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-          <Drawer.Screen name="Home" component={Dashboard} />
-          <Drawer.Screen name="AddTask" component={AddTask} />
+          <Drawer.Screen name="Dashboard" component={Dashboard} />
+          <Drawer.Screen name="Tasks" component={TasksScreen} />
           <Drawer.Screen name="Calendar" component={Calendar} />
           <Drawer.Screen name="Settings" component={SettingsScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
   }
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#874c3c',
+    },
+    searchInput: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+    },
+    taskRow: {
+      padding: 15,
+      borderBottomColor: '#ccc',
+      borderBottomWidth: 1,
+    },
+    taskDetail: {
+      padding: 15,
+      marginTop: 20,
+      backgroundColor: '#f9f9f9',
+      borderRadius: 5,
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderRadius: 10,
+    },
+    input: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingHorizontal: 10,
+    },
+    datePicker: {
+      width: '100%',
+      marginBottom: 10,
+    },
+    screenContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    drawerContent: {
+      flex: 1,
+      paddingTop: 20,
+      paddingHorizontal: 10,
+    },
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#874c3c',
-  },
-  searchInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  taskRow: {
-    padding: 15,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-  },
-  taskDetail: {
-    padding: 15,
-    marginTop: 20,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 5,
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  datePicker: {
-    width: '100%',
-    marginBottom: 10,
-  },
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  drawerContent: {
-    flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 10,
-  },
-});

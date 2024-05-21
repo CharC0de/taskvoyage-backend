@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, Alert, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, TextInput, Alert, Image, AsyncStorage } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import axios from 'axios'; // Import axios for API requests
 
 function SettingsScreen({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [username, setUsername] = useState('User123');
-  const [email, setEmail] = useState('user@example.com');
-  const [newUsername, setNewUsername] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
 
+  useEffect(() => {
+    // Function to fetch user data from database
+    const fetchUserData = async () => {
+      try {
+        // Retrieve userId from AsyncStorage
+        const userId = await AsyncStorage.getItem('userId');
+        // Fetch user data from database using userId
+        const response = await axios.get(`http://your-api-url/user/${userId}`);
+        // Set username and email in state
+        setUsername(response.data.username);
+        setEmail(response.data.email);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
+    // Call the fetchUserData function when the component mounts
+    fetchUserData();
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
 
-  const changeUsername = () => {
-    setUsername(newUsername);
-    Alert.alert('Success', 'Username changed successfully');
-    setChangeUsernameVisible(false);
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userId');
+      navigation.replace('Login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
@@ -64,27 +85,26 @@ function SettingsScreen({ navigation }) {
 }
 
 // Placeholder components for other screens
-function HomeScreen() {
+function Dashboard() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Home Screen</Text>
+      <Text>Homepage</Text>
     </View>
   );
 }
 
-
-function AddTaskScreen() {
+function AddTask() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Add Task Screen</Text>
+      <Text>Tasks</Text>
     </View>
   );
 }
 
-function CalendarScreen() {
+function SettingsScreen() {
   return (
     <View style={styles.screenContainer}>
-      <Text>Calendar Screen</Text>
+      <Text>Settings</Text>
     </View>
   );
 }
@@ -106,10 +126,9 @@ function CustomDrawerContent({ navigation }) {
 
   return (
     <View style={styles.drawerContent}>
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Tasks" onPress={() => navigation.navigate('Tasks')} />
+      <Button title="Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+      <Button title="Tasks" onPress={() => navigation.navigate('AddTask')} />
       <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
-      <Button title="Add Task" onPress={() => navigation.navigate('AddTask')} />
       <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
       <Button title="Logout" onPress={handleLogout} />
     </View>
@@ -122,10 +141,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Tasks" component={TasksScreen} />
-        <Drawer.Screen name="Calendar" component={CalendarScreen} />
-        <Drawer.Screen name="AddTask" component={AddTaskScreen} />
+        <Drawer.Screen name="Dashboard" component={Dashboard} />
+        <Drawer.Screen name="AddTask" component={AddTask} />
+        <Drawer.Screen name="Calendar" component={Calendar} />
         <Drawer.Screen name="Settings" component={SettingsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

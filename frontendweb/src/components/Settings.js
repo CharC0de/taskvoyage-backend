@@ -1,10 +1,9 @@
-// Settings.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
-const Settings = () => {
+const Settings = ({ userId }) => {
     const [user, setUser] = useState({
         profilePicture: '',
         username: '',
@@ -12,10 +11,11 @@ const Settings = () => {
     });
     const [newUsername, setNewUsername] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch user data from the database
-        axios.get('http://localhost:8000/api/customuser/')
+        // Fetch user data based on userId
+        axios.get(`http://localhost:8000/api/customuser/${userId}`)
             .then(response => {
                 setUser(response.data);
                 setNewUsername(response.data.username);
@@ -23,7 +23,7 @@ const Settings = () => {
             .catch(error => {
                 console.error('Error fetching user data:', error);
             });
-    }, []);
+    }, [userId]);
 
     const handleUsernameChange = (e) => {
         setNewUsername(e.target.value);
@@ -36,7 +36,7 @@ const Settings = () => {
         }
 
         // Update the username in the database
-        axios.put('http://localhost:8000/api/customuser/', { username: newUsername })
+        axios.put(`http://localhost:8000/api/customuser/${userId}`, { username: newUsername })
             .then(response => {
                 setUser({ ...user, username: newUsername });
                 setMessage('Username updated successfully!');
@@ -45,6 +45,12 @@ const Settings = () => {
                 console.error('Error updating username:', error);
                 setMessage('Failed to update username. Please try again.');
             });
+    };
+
+    const handleLogout = () => {
+        // Clear userId and navigate to login page
+        document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        navigate('/login');
     };
 
     return (
@@ -105,6 +111,7 @@ const Settings = () => {
                         </ul>
                     </div>
                 </div>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );

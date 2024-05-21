@@ -29,9 +29,10 @@ const AddTask = ({ onTaskAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const userId = localStorage.getItem('userId');
       const response = await axios.post(
         'http://localhost:8000/api/tasks/',
-        formData
+        { ...formData, userId } // Include userId in the task data
       );
       onTaskAdded(response.data);
       // Save task data to localStorage
@@ -61,12 +62,12 @@ const AddTask = ({ onTaskAdded }) => {
           <img src="./img/ship.png" alt="Ship Icon3" className="ship-icon3"/>  <span>TaskVoyage</span>
         </div>
         <ul className="navigation">
-        <li><a href="/dashboard">Home</a></li>
-        <li><a href="/Task">Tasks</a></li>
-        <li><a href="/Calendar">Calendar</a></li>
-        <li><a href="/Settings">Settings</a></li>
-        <li><a href="/login">Logout</a></li>
-      </ul>
+          <li><a href="/dashboard">Home</a></li>
+          <li><a href="/Task">Tasks</a></li>
+          <li><a href="/Calendar">Calendar</a></li>
+          <li><a href="/Settings">Settings</a></li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
       </div>
       <div className="content-area">
         <h1>Add Task</h1>

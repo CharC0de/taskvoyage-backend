@@ -1,3 +1,4 @@
+// Calendar.js
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -61,9 +62,10 @@ const CalendarPage = () => {
     localStorage.setItem('events', JSON.stringify([...events, event]));
     // Implement saving the event to the backend
     try {
+      const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
       const response = await axios.post(
         'http://localhost:8000/api/events/',
-        event
+        { ...event, userId } // Include userId in the event data
       );
       setAddedEvent(response.data); // Set the added event
     } catch (error) {

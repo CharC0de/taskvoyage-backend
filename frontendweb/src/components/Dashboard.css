@@ -16,6 +16,8 @@
   right: 0;
   bottom: 0;
   z-index: -1; /* Behind content */
+  background-color: rgba(0, 0, 0, 0.38); /* Lower opacity */
+
 }
 
 .sidebar {
@@ -83,6 +85,8 @@
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.50); /* Lower opacity */
+  color:#f0f0f0;
 }
 
 .introduction .pirate-avatar {
@@ -93,10 +97,11 @@
 
 .introduction h1, .introduction p {
   margin: 0;
+  color:#f0f0f0;
 }
 
 h1, p {
-  color: black;
+  color:#f0f0f0;
 }
 
 .text-box {
@@ -107,10 +112,11 @@ h1, p {
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.50); /* Lower opacity */
 }
 
 .text-box h2{
-  color: black;
+  color: white;
 }
 
 p {
