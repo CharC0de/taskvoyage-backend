@@ -12,28 +12,30 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['userId', 'first_name', 'last_name', 'username',
                   'email', 'password', 'confirm_password', 'verified']
-
-    def create(self, validated_data):
-        # Remove confirm_password from validated_data
-        confirm_password = validated_data.pop('confirm_password')
-        user = CustomUser.objects.create_user(**validated_data)
-        return user
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
     def validate(self, attrs):
-        # Remove confirm_password from attrs
-        confirm_password = attrs.pop('confirm_password')
         password = attrs.get('password')
+        confirm_password = attrs.get('confirm_password')
 
-        if confirm_password != password:
+        if password and confirm_password and password != confirm_password:
             raise serializers.ValidationError(
-                {'confirm_password': 'Passwords do not match'})
+                {"confirm_password": "Passwords do not match."})
 
         try:
             validate_password(password)
         except DjangoValidationError as e:
-            raise serializers.ValidationError({'password': str(e)})
+            raise serializers.ValidationError({"password": list(e.messages)})
 
         return attrs
+
+    def create(self, validated_data):
+        # Remove confirm_password from validated_data
+        validated_data.pop('confirm_password')
+        user = CustomUser.objects.create_user(**validated_data)
+        return user
 
 
 class LoginSerializer(serializers.Serializer):
@@ -49,10 +51,11 @@ class EmailConfirmationSerializer(serializers.Serializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['title', 'start_date', 'end_date', 'start_time', 'end_time', 'description', 'category', 'status']
+        fields = ['title', 'start_date', 'end_date', 'start_time',
+                  'end_time', 'description', 'category', 'status']
+
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['title', 'start', 'end']
-

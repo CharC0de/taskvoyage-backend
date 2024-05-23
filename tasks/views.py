@@ -30,7 +30,7 @@ from rest_framework.generics import ListCreateAPIView
 
 
 class UserCreateView(APIView):
-    
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -46,8 +46,7 @@ class UserCreateView(APIView):
                 'id': user.pk,
                 'token': account_activation_token.make_token(user),
             }
-            email_message = render_to_string(
-                'activation.html', message)
+            email_message = render_to_string('activation.html', message)
             to_email = user.email
             email = EmailMessage(mail_subject, email_message, to=[to_email])
             email.send()
@@ -69,11 +68,13 @@ class LoginView(APIView):
         if '@' in username_or_email:
             scenario = 1
             # Attempt to authenticate with email
-            user = authenticate(request, email=username_or_email, password=password)
+            user = authenticate(
+                request, email=username_or_email, password=password)
         else:
             scenario = 2
             # Attempt to authenticate with username
-            user = authenticate(request, username=username_or_email, password=password)
+            user = authenticate(
+                request, username=username_or_email, password=password)
 
         if user is None:
             return Response({'error': 'Invalid Credentials ' + str(scenario)}, status=status.HTTP_404_NOT_FOUND)
@@ -88,7 +89,6 @@ class LoginView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-        
 class EmailConfirmationView(APIView):
     def get(self, request, uid, token):
         try:
@@ -97,13 +97,14 @@ class EmailConfirmationView(APIView):
             user = None
 
         if user is not None and account_activation_token.check_token(user, token):
-            user.is_active =True
-            user.verified =True
+            user.is_active = True
+            user.verified = True
             user.save()
             return Response({'message': 'Account activated successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid activation link'+str(uid)+" "+str(request)}, status=status.HTTP_400_BAD_REQUEST)
- 
+
+
 class TaskCreateViewListCreateAPIView(ListCreateAPIView):
     def post(self, request):
         serializer = TaskSerializer(data=request.data)
@@ -113,7 +114,8 @@ class TaskCreateViewListCreateAPIView(ListCreateAPIView):
         else:
             print(serializer.errors)  # Print serializer errors
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class TaskListViewListCreateAPIView(ListCreateAPIView):
     def get(self, request):
         tasks = Task.objects.all()
@@ -126,6 +128,7 @@ class TaskListViewListCreateAPIView(ListCreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class TaskDetailViewListCreateAPIView(ListCreateAPIView):
     def get_object(self, pk):
@@ -151,7 +154,8 @@ class TaskDetailViewListCreateAPIView(ListCreateAPIView):
         task = self.get_object(pk)
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
 class EventCreateViewListCreateAPIView(ListCreateAPIView):
     def post(self, request):
         serializer = EventSerializer(data=request.data)
@@ -159,4 +163,3 @@ class EventCreateViewListCreateAPIView(ListCreateAPIView):
             serializer.save()
             return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
